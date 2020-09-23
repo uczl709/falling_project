@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!-- SPDX-FileCopyrightText: 2019-2020 Smart Robotics Lab, Imperial College London -->
+<!-- SPDX-FileCopyrightText: 2019 Anna Dai -->
+<!-- SPDX-FileCopyrightText: 2019-2020 Sotiris Papatheodorou -->
+<!-- SPDX-License-Identifier: BSD-3-Clause -->
+<package format="2">
+  <name>supereight_ros</name>
+  <version>0.0.0</version>
+  <description>ROS wrapper for supereight</description>
+  <maintainer email="s.papatheodorou18@imperial.ac.uk">Sotiris Papatheodorou</maintainer>
+  <license>BSD-3-Clause</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <buildtool_depend>catkin_simple</buildtool_depend>
+
+  <build_depend>message_generation</build_depend>
+
+  <depend>roscpp</depend>
+  <depend>eigen_conversions</depend>
+  <depend>geometry_msgs</depend>
+  <depend>image_geometry</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>visualization_msgs</depend>
+
+  <exec_depend>message_runtime</exec_depend>
+</package>

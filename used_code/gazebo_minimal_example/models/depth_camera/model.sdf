@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="depth_camera">
+
+    <link name="link">
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.1 0.1 0.1</size>
+          </box>
+        </geometry>
+      </visual>
+
+      <sensor name="depth_camera" type="depth">
+        <camera name="__default__">
+          <horizontal_fov>1.047</horizontal_fov>
+          <image>
+            <width>320</width>
+            <height>240</height>
+          </image>
+          <clip>
+            <near>0.1</near>
+            <far>10</far>
+          </clip>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>10</update_rate>
+        <visualize>true</visualize>
+
+        <plugin name="my_depth_plugin" filename="libmy_depth_plugin.so">
+          <depth_topic>/my_depth_camera/depth</depth_topic>
+          <rgb_topic>/my_depth_camera/rgb</rgb_topic>
+        </plugin>
+      </sensor>
+
+    </link>
+
+
+    <plugin name="my_depth_plugin" filename="libmy_pose_plugin.so">
+      <frame_id>/my_depth_camera</frame_id>
+      <pose_topic>/my_depth_camera/pose</pose_topic>
+      <pose_set_topic>/my_depth_camera/pose/set</pose_set_topic>
+      <pose_test_topic>/my_depth_camera/poseinobj</pose_test_topic>
+    </plugin>
+
+<!--
+    <plugin name="my_depthinobj_plugin" filename="libmy_poseinobj_plugin.so">
+      <frame_id>/my_depth_camera/inobj</frame_id>
+      <pose_topic>/my_depth_camera/poseinobj2</pose_topic>
+    </plugin>
+-->
+  </model>
+</sdf>

@@ -1,0 +1,17 @@
+<launch>
+  <!-- Settings -->
+  <env name="GAZEBO_MODEL_PATH" value="$(find gazebo_minimal_example)/models:$(optenv GAZEBO_MODEL_PATH)" />
+  <env name="GAZEBO_RESOURCE_PATH" value="$(find gazebo_minimal_example)/worlds:$(optenv GAZEBO_RESOURCE_PATH)" />
+
+  <!-- Gazebo -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find gazebo_minimal_example)/worlds/sim_depth_camera.world" />
+    <arg name="use_sim_time" value="true" />
+    <arg name="verbose" value="true" />
+    <arg name="headless" value="false" />
+    <arg name="debug" value="false" />
+    <arg name="paused" value="false" />
+    <arg name="gui" value="true" />
+  </include>
+</launch>
+

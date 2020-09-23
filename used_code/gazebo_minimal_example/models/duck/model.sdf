@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="duck">
+     <link name="link">
+      <visual name="visual">
+        <geometry>
+		
+		<mesh>
+			<uri>model://duck/duck.dae </uri>
+		</mesh>
+		
+        </geometry>
+      </visual>
+    </link>
+<!--
+    <plugin name="my_duck_plugin" filename="libmy_duck_plugin.so">
+      <frame_id>/my_duck</frame_id>
+      <duckpose_topic>/my_duck/pose</pose_topic>
+      <duckpose_set_topic>/my_duck/pose/set</pose_set_topic>
+    </plugin>
+-->
+    <plugin name="my_duck_plugin" filename="libmy_duck_plugin.so">
+      <frame_id>/my_duck</frame_id>
+      <duckpose_topic>/my_duck/pose</duckpose_topic>
+      <duckpose_set_topic>/my_duck/pose/set</duckpose_set_topic>
+    </plugin>
+
+  </model>
+</sdf>
