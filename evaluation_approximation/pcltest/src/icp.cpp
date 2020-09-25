@@ -17,8 +17,6 @@ double compute_ICP(std::string file1, std::string file2);
 typedef pcl::PointXYZ PointT;
 typedef pcl::PointCloud<PointT> PointCloudT;
 
-
-// show the points cloud
 void show_result(){
 
   //input
@@ -45,6 +43,10 @@ void show_result(){
     icpScore = icp.getFitnessScore();
   }
   // compute a distance:
+  // float test1 = pcl::geometry::squaredDistance(cloud_org,cloud_org);
+  // float test2 = pcl::geometry::squaredDistance(cloud_org,cloud_map);
+  // std::cout <<"test"<<test1 << "test2"<<test2 <<std::endl;
+
 
   // dispaly the result in the pcl viewer
   pcl::visualization::PCLVisualizer viewer ("ICP for duck");
@@ -76,7 +78,6 @@ void show_result(){
 
 }
 
-// convert the mesh to octmap
 void show_octomap(){
   pcl::PointCloud<pcl::PointXYZ> cloud;
   pcl::io::loadPCDFile("/home/wei/桌面/pcltest/modles/test2.pcd", cloud);
@@ -92,7 +93,6 @@ void show_octomap(){
   std::cout<< "Done"<<std::endl;
 }
 
-//draw the original bounding box 
 void bounding_box()
 {
 
@@ -208,8 +208,6 @@ void bounding_box()
 }
 
 
-
-// Info for instructions
 void show_info()
 {
   std::cout << "Usage: [Option]" <<std::endl;
@@ -224,8 +222,6 @@ void show_info()
   std::cout << "-i3: file3 any message" <<std::endl;
 }
 
-
-// compare the mesh with the ground truth
 void compare(std::string file1, std::string file2, std::string file3)
 {
   // Info: teset the different duck size:
@@ -305,7 +301,6 @@ void compare(std::string file1, std::string file2, std::string file3)
   }
 }
 
-//compute the approximation box
 void apprximate_box(std::string file1, std::string file2){
   //
 
@@ -342,15 +337,13 @@ void apprximate_box(std::string file1, std::string file2){
   pcl::io::loadPLYFile(file2,*duck_reconstructed);
 
   // Find the max edge:
-  
-  //double v_org, v_new;
-  //org size and vole:
-  
-  //pcl::PointXYZ minPt, maxPt;
+
+  float v_org, v_reconstructed;
+  pcl::getMinMax3D(*duck_org, minPt, maxPt);
+  v_reconstructed = (maxPt.x-minPt.x) * (maxPt.y-minPt.z) * (maxPt.z-minPt.z);
+
   pcl::getMinMax3D(*duck_reconstructed, minPt, maxPt);
-
   double x_edge,y_edge,z_edge,max_edge;
-
   // draw the cube 
       //1. compute how many points 
   float distance = 10./512.;
@@ -369,7 +362,7 @@ void apprximate_box(std::string file1, std::string file2){
 
 
   approximate_x = maxPt.x - minPt.x;
-
+  v_org = (maxPt.x-minPt.x) * (maxPt.y-minPt.z) * (maxPt.z-minPt.z);
   
 
   xpoints = int ( (maxPt.x-minPt.x) / distance) + 1;
@@ -441,9 +434,9 @@ void apprximate_box(std::string file1, std::string file2){
   double ICP_score;
   ICP_score = compute_ICP(file1,file2);
   std::cout<< "ICP score is" << ICP_score << std::endl;
-  std::cout<< "approximate propgation is:" << approximate_x/real_x_small << std::endl;
-  std::cout<< "approximate propgation is:" << approximate_x/real_x_big << std::endl;
-  //std::cout<< ""
+  std::cout<< "approximate propgation is;" << approximate_x/real_x_small << std::endl;
+  std::cout<< "approximate propgation is;" << approximate_x/real_x_big << std::endl;
+  std::cout<< "approximate volumn is:" << v_reconstructed / v_org << std::endl;
 
   // show the result.
   pcl::visualization::PCLVisualizer viewer ("apprximate box for reconstructed mesh");
@@ -470,8 +463,6 @@ void apprximate_box(std::string file1, std::string file2){
 }
 
 
-
-//check the original size
 void check_size(){
 
   // cube = "/home/wei/桌面/rock_model_used/cube.ply";
@@ -514,7 +505,6 @@ void check_size(){
 
 }
 
-//compute ICP score test
 double compute_ICP(std::string file1, std::string file2){
   // input:
   PointCloudT::Ptr duck_org (new PointCloudT);  
@@ -537,7 +527,6 @@ double compute_ICP(std::string file1, std::string file2){
   return icp.getFitnessScore();
 }
 
-// main function for use
 int main (int argc, char** argv)
 { 
   
@@ -611,7 +600,7 @@ int main (int argc, char** argv)
 }
 
 
-// command:
+
 //./icp -diffg=1 -i1=/home/wei/桌面/mesh/falling_one_axis/512_div1.ply -i2=/home/wei/桌面/mesh/falling_one_axis/512_div3.ply -i3=/home/wei/桌面/mesh/falling_one_axis/512_div10.ply
 
 // ./icp -diffg=1 -i1=/home/wei/桌面/mesh/big_one_axis/div1.ply -i2=/home/wei/桌面/mesh/big_one_axis/div3.ply -i3=/home/wei/桌面/mesh/big_one_axis/div10.ply
@@ -620,3 +609,46 @@ int main (int argc, char** argv)
 
 // ./icp -diffg=2 -i1=/home/wei/桌面/pcltest/duck.ply -i2=/home/wei/桌面/project_bag/result/small/ofusion/e1.ply -i3=0
 
+
+
+
+
+
+
+
+
+  // pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_in (new pcl::PointCloud<pcl::PointXYZ>(5,1));
+  // pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_out (new pcl::PointCloud<pcl::PointXYZ>);
+  // std::cout<< "HELLO PCL AND TEST THE ICP:" <<std::endl;
+
+
+  // for(auto& point:*cloud_in)
+  // {
+  //  point.x = 1024 * rand() / (RAND_MAX + 1.0f);
+  //   point.y = 1024 * rand() / (RAND_MAX + 1.0f);
+  //   point.z = 1024 * rand() / (RAND_MAX + 1.0f);
+  // }
+
+  // std::cout << "Saved " << cloud_in->points.size () << " data points to input:" << std::endl;
+
+  // for(auto& point:*cloud_in)
+  //  std::cout<<point<<std::endl;
+
+  // *cloud_out = *cloud_in;
+  // std::cout << "size:" << cloud_out->points.size() << std::endl;
+
+  // for(auto& point:*cloud_out)
+  //  std::cout<<point<<std::endl;
+
+  // //ICP procedu:
+  // pcl::IterativeClosestPoint<pcl::PointXYZ, pcl::PointXYZ> icp;
+  // icp.setInputSource(cloud_in);
+  // icp.setInputTarget(cloud_out);
+
+  // pcl::PointCloud<pcl::PointXYZ> Final;
+  // icp.align(Final);
+
+
+  // std::cout << "has converged:" << icp.hasConverged() << " score: " <<
+  // icp.getFitnessScore() << std::endl;
+  // std::cout << icp.getFinalTransformation() << std::endl;
