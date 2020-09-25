@@ -16,3 +16,10 @@ TSDFresult: It contains some reconstructed mesh for different experiment. I only
 
 
 
+## Instructions for run
+
+1. Run the gazebo_minimal_example to simulate the object falling. Change the falling object in the model.
+2. Set the the map type, enable tracking, image topic in the Supereight_ros.
+3. Run the Supereight_ros and save the result.
+4. run the icp.cpp in evaluation to check the result and draw the approximation shape.
+

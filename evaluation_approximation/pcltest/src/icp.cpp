@@ -342,6 +342,10 @@ void apprximate_box(std::string file1, std::string file2){
   pcl::io::loadPLYFile(file2,*duck_reconstructed);
 
   // Find the max edge:
+  
+  //double v_org, v_new;
+  //org size and vole:
+  
   //pcl::PointXYZ minPt, maxPt;
   pcl::getMinMax3D(*duck_reconstructed, minPt, maxPt);
 
@@ -437,8 +441,9 @@ void apprximate_box(std::string file1, std::string file2){
   double ICP_score;
   ICP_score = compute_ICP(file1,file2);
   std::cout<< "ICP score is" << ICP_score << std::endl;
-  std::cout<< "approximate propgation is;" << approximate_x/real_x_small << std::endl;
-  std::cout<< "approximate propgation is;" << approximate_x/real_x_big << std::endl;
+  std::cout<< "approximate propgation is:" << approximate_x/real_x_small << std::endl;
+  std::cout<< "approximate propgation is:" << approximate_x/real_x_big << std::endl;
+  //std::cout<< ""
 
   // show the result.
   pcl::visualization::PCLVisualizer viewer ("apprximate box for reconstructed mesh");
